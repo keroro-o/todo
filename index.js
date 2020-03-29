@@ -15,7 +15,7 @@
 const tasks = new Map();
 
 /**
- * TODO を追加する関数。連想配列に未完了の状態（false)でタスクを追加する。
+ * タスクを追加する関数。連想配列に未完了の状態（false)でタスクを追加する。
  * @param {string} task
  */
 function todo(task) {
@@ -41,7 +41,7 @@ function isNotDone(taskAndIsDonePair) {
 }
 
 /**
- * TODO の一覧の配列を取得する関数。
+ * タスクの一覧の配列を取得する関数。
  * @return {array}
  */
 function list() {
@@ -50,7 +50,30 @@ function list() {
     .map(t => t[0]);  // 引数tで配列の要素を取得して、選別された値のキーとなっているタスクの文字列を取得し、
 }                     //  その文字列だけの値に変換する関数
 
+/**
+ * タスクを完了状態にする関数。連想配列にtaskがキーとして登録されているかを確認し、
+ * もし存在すれば、完了状態をtrueに変更する。
+ * @param {string} task
+ */
+function done(task) {
+  if (tasks.has(task)) {
+    tasks.set(task, true);
+  }
+}
+
+/**
+ * 完了済みのタスクの一覧の配列を取得する関数。
+ * @return {array}
+ */
+function donelist() {
+  return Array.from(tasks)
+    .filter(isDone)
+    .map(t => t[0]);
+}
+
 module.exports = {
   todo,
-  list
+  list,
+  done,
+  donelist
 };  
