@@ -71,9 +71,18 @@ function donelist() {
     .map(t => t[0]);
 }
 
+/**
+ * 項目を削除する関数。連想配列からtaskの文字列のキーの情報を除去する。
+ * @param {string} task
+ */
+function del(task) {
+  tasks.delete(task);
+}
+
 module.exports = {
   todo,
   list,
   done,
-  donelist
+  donelist,
+  del
 };  
