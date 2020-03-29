@@ -47,8 +47,8 @@ function isNotDone(taskAndIsDonePair) {
 function list() {
   return Array.from(tasks)
     .filter(isNotDone)
-    .map(t => t[0]);
-}
+    .map(t => t[0]);  // 引数tで配列の要素を取得して、選別された値のキーとなっているタスクの文字列を取得し、
+}                     //  その文字列だけの値に変換する関数
 
 module.exports = {
   todo,
