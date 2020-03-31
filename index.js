@@ -23,6 +23,14 @@ let tasks = new Map();
 const fs = require('fs');
 const fileName = './tasks.json';
 
+// 同期的にファイルから復元
+try {
+  const dataString = fs.readFileSync(fileName, 'utf8');
+  tasks = new Map(JSON.parse(dataString));
+} catch (err) {
+  console.log(fileName + 'から復元できませんでした');
+}
+
 /**
  * タスクをファイルに保存する関数。
  * まず、tasks という連想配列を Array.from で配列に変換した後、更に、JSON.stringify という関数でJSON の文字列に変換し、
