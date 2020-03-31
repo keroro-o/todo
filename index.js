@@ -9,10 +9,28 @@
   為に”CRUD”という概念に基づいてチェックすること。
 */
 
+/*
+【タスクの永続化機能の要件定義】
+    ● ファイルを書き込む関数、読み込む関数を追加。
+    ● タスクの追加、更新時にファイル更新も行う。
+    ● bot の読み込み時にファイルからデータを読み込む。
+*/
+
 'use strict';
 
 // key: タスクの文字列 value: 完了して{いるかどうかの真偽値
-const tasks = new Map();
+let tasks = new Map();
+const fs = require('fs');
+const fileName = './tasks.json';
+
+/**
+ * タスクをファイルに保存する関数。
+ * まず、tasks という連想配列を Array.from で配列に変換した後、更に、JSON.stringify という関数でJSON の文字列に変換し、
+ * 更に同期的にファイルに書き出す。
+ */
+function saveTasks() {
+  fs.writeFileSync(fileName, JSON.stringify(Array.from(tasks)), 'utf8');
+}
 
 /**
  * タスクを追加する関数。連想配列に未完了の状態（false)でタスクを追加する。
@@ -20,6 +38,7 @@ const tasks = new Map();
  */
 function todo(task) {
   tasks.set(task, false);
+  saveTasks();
 }
 
 /**
@@ -58,6 +77,7 @@ function list() {
 function done(task) {
   if (tasks.has(task)) {
     tasks.set(task, true);
+    saveTasks();
   }
 }
 
@@ -77,6 +97,7 @@ function donelist() {
  */
 function del(task) {
   tasks.delete(task);
+  saveTasks();
 }
 
 module.exports = {
